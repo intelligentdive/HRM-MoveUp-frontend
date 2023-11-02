@@ -1,23 +1,71 @@
 /* eslint-disable react/no-unescaped-entities */
 
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { RxCross1 } from "react-icons/rx";
-import { useDispatch } from "react-redux";
-import { addNewUser } from "../../../redux/fracture/Users/UserSlice";
+import imageUploader from "../../shared/imageUploader/imageUploader";
 
 const AdDContact_modal = ({ setIsOpen }) => {
   /* */
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
-  const dispatch = useDispatch();
+  const [Images, setImage] = useState("");
+  const fileInputRefs = useRef([]);
+
+  const addImage = async (formIndex, fieldName) => {
+    toast.error("Please wait a minute");
+    if (Images?.length == 0) {
+      const image = await imageUploader(fieldName[0]);
+      if (image[1] == "OK") {
+        const updatedImage = image[0];
+        setImage(updatedImage);
+        toast.success("Your Picture Added Successfully");
+      } else toast.error("Something Wrong");
+    }
+  };
+
+  console.log(Images);
 
   const onUserSubmit = (data) => {
-    console.log(data);
-    dispatch(addNewUser(data));
+    const contactData = {
+      name: data.name,
+      phone: data.phone,
+      email: data.email,
+      address: data.address,
+      profile: Images,
+    };
+    const gata = localStorage.getItem("contactData");
+    // const parsedata = JSON.parse(Array.isArray(gata)? gata )
+    let parsedata = [];
+    if (gata) {
+      console.log(gata);
+      parsedata = JSON.parse(gata);
+      const findData = parsedata.find((item) => item.name == contactData.name);
+      if (!findData) {
+        parsedata.push(contactData);
+        reset();
+        toast.success(`Add New Contact Successfully`);
+      } else {
+        toast.error("This Place has already been added");
+      }
+    } else {
+      parsedata.push(contactData);
+      toast.success(`Add New Contact Successfully`);
+      reset();
+    }
+    console.log(gata);
+
+    localStorage.setItem("contactData", JSON.stringify(parsedata));
+    // console.log(contactData);
+    // axios.post("./data/Contact.json", { data: contactData }).then((data) => {
+    // localStorage.setItem("contactData", JSON.stringify(data));
+    // });
   };
 
   return (
@@ -35,7 +83,7 @@ const AdDContact_modal = ({ setIsOpen }) => {
             <div className="mt-5">
               <div className="flex items-center justify-between mt-4 gap-2">
                 <input
-                  {...register("fullName", { required: true })}
+                  {...register("name", { required: true })}
                   type="text"
                   placeholder="Full Name*"
                   className="input input-bordered input-sm w-full placeholder-black"
@@ -67,8 +115,10 @@ const AdDContact_modal = ({ setIsOpen }) => {
                 <div>
                   <input
                     style={{ display: "none" }}
-                    type="file"
                     id="fileInput"
+                    type="file"
+                    onChange={(e) => addImage("Images", e.target.files)}
+                    ref={(ref) => (fileInputRefs.current[0] = ref)}
                   />
                   <label
                     style={{
