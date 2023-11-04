@@ -1,327 +1,166 @@
-import { useState } from "react";
-import { AiOutlineArrowLeft, AiOutlineArrowRight, AiOutlineDelete } from "react-icons/ai";
+import { useEffect, useState } from "react";
+import {
+  AiOutlineArrowLeft,
+  AiOutlineArrowRight,
+  AiOutlineDelete,
+} from "react-icons/ai";
+import { BsTelephone } from "react-icons/bs";
 import { FaGripHorizontal, FaListUl } from "react-icons/fa";
 import { FiSearch } from "react-icons/fi";
-import one from '../../assets/Department/Oval Copy 2.png';
-import two from '../../assets/Department/Oval Copy 2 (1).png';
-import three from '../../assets/Department/Oval Copy 2 (2).png';
-import four from '../../assets/Department/Oval Copy 2 (3).png';
-import five from '../../assets/Department/Oval Copy 2 (4).png';
-import six from '../../assets/Department/Oval Copy 6.png';
-import seven from '../../assets/Department/Oval Copy 2 (7).png';
-import eight from '../../assets/Department/Oval Copy 2 (8).png';
 import { MdOutlineForwardToInbox } from "react-icons/md";
-import { BsTelephone } from "react-icons/bs";
+import { Link } from "react-router-dom";
 import AdDContact_modal from "./AdDContact_modal";
 
-
 const Contact = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [contactData, setContactData] = useState([]);
 
-    const [isOpen, setIsOpen] = useState(false);
-
-    return (
-        <div>
-
-            <div className="mt-4 bg-white p-2 rounded-lg">
-                <div className="flex items-center justify-between">
-                    <div>
-                        <div className="flex items-center gap-8">
-                            <div>
-                                <p className="text-[#C5CEE0]">My Income</p>
-                                <h3 className="font-semibold">$5,510</h3>
-                            </div>
-                            <div>
-                                <p className="text-[#C5CEE0]">Site Taffic</p>
-                                <h3 className="font-semibold">53% up</h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="flex items-center">
-                        <div className="flex items-center justify-between w-[150px]  border border-[#EFF4FA] cursor-pointer rounded-[10px]">
-                            <div
-                                className="w-1/2 text-center px-4 py-2 bg-[#0095FF] border border-[#0095FF]"
-                                style={{
-                                    borderTopLeftRadius: "10px",
-                                    borderBottomLeftRadius: "10px",
-                                }}
-                            >
-                                <FaListUl size={32} color="#fff"></FaListUl>
-                            </div>
-                            <div
-                                className="px-4 text-center py-2 bg-[#F9FBFD] hover:bg-[#F9FBFD] w-1/2 cursor-pointer"
-                            >
-                                <FaGripHorizontal size={32} color="#8F9BB3"></FaGripHorizontal>
-                            </div>
-                        </div>
-                        <a href="#addContact_modal" onClick={() => setIsOpen(true)}><button className="btn bg-[#00E096] hover:bg-[#00E096] text-white ml-2 capitalize">Add Contact</button></a>
-                    </div>
-                </div>
-                <hr className="mt-5 mb-4" />
-
-                <div className=" relative">
-                    <input
-                        type="text"
-                        placeholder="Search here..."
-                        className="h-[34px] placeholder-[#C5CEE0] text-[15px] font-normal outline-none bg-white border border-[#EFF4FA] px-[12px] pl-12 rounded-lg w-full p-5"
-                    />
-
-                    <FiSearch className="absolute top-[10px] text-[#C5CEE0] ml-4" size={25} />
-                </div>
-
+  useEffect(() => {
+    // axios
+    //   .get("./data/Contact.json")
+    //   .then((data) => {
+    //     setContactData(data?.data);
+    //   })
+    //   .catch((err) => console.log(err));
+    const contactDataAll = localStorage.getItem("contactData");
+    setContactData(JSON.parse(contactDataAll));
+  }, []);
+  console.log(contactData);
+  return (
+    <div>
+      <div className="mt-4 bg-white p-2 rounded-lg">
+        <div className="flex items-center justify-between">
+          <div>
+            <div className="flex items-center gap-8">
+              <div>
+                <p className="text-[#C5CEE0]">My Income</p>
+                <h3 className="font-semibold">$5,510</h3>
+              </div>
+              <div>
+                <p className="text-[#C5CEE0]">Site Taffic</p>
+                <h3 className="font-semibold">53% up</h3>
+              </div>
             </div>
-
-
-
-            {/* Table Starts */}
-            <div className="mt-4 mb-[65px]">
-
-                <div className=" border border-gray-300 rounded-lg bg-white mt-[25px]">
-                    <div className="mt-4">
-                        <div className="overflow-x-auto">
-                            <table className="table">
-
-                                <tbody>
-
-                                    <tr>
-                                        <td className='flex items-center'>
-                                            <div className="rating rating-md mr-4">
-                                                <input type="radio" name="rating-8" className="mask mask-star-2 bg-orange-400" checked />
-                                            </div>
-                                            <div className="avatar">
-                                                <div className="w-10">
-                                                    <img src={one} />
-                                                </div>
-                                            </div>
-                                            <div className='ml-1'>
-                                                <h3 className='font-semibold'>David Wagner</h3>
-                                                <p className='text-[#8F9BB3]'>+223-459-7564</p>
-                                            </div>
-                                        </td>
-                                        <td>david_wagner@example.com</td>
-                                        <td>103 Ritchie Cliff Apt, MA 01323</td>
-                                        <td>
-                                            <div className='flex items-center'>
-                                                <MdOutlineForwardToInbox size={20} color='#C5CEE0' className='mr-3'></MdOutlineForwardToInbox>
-                                                <BsTelephone size={20} color='#C5CEE0' className='mr-3'></BsTelephone>
-                                                <AiOutlineDelete size={20} color='#C5CEE0'></AiOutlineDelete>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td className='flex items-center'>
-                                            <div className="rating rating-md mr-4">
-                                                <input type="radio" name="rating-8" className="mask mask-star-2 bg-orange-400" checked />
-                                            </div>
-                                            <div className="avatar">
-                                                <div className="w-10">
-                                                    <img src={two} />
-                                                </div>
-                                            </div>
-                                            <div className='ml-1'>
-                                                <h3 className='font-semibold'>Ina Hogan</h3>
-                                                <p className='text-[#8F9BB3]'>+223-256-4569</p>
-                                            </div>
-                                        </td>
-                                        <td>windler.warren@runte.net</td>
-                                        <td>73 Feest Valley Apt. 778</td>
-                                        <td>
-                                            <div className='flex items-center'>
-                                                <MdOutlineForwardToInbox size={20} color='#C5CEE0' className='mr-3'></MdOutlineForwardToInbox>
-                                                <BsTelephone size={20} color='#C5CEE0' className='mr-3'></BsTelephone>
-                                                <AiOutlineDelete size={20} color='#C5CEE0'></AiOutlineDelete>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td className='flex items-center'>
-                                            <div className="rating rating-md mr-4">
-                                                <input type="radio" name="rating-8" className="mask mask-star-2 bg-orange-400" checked />
-                                            </div>
-                                            <div className="avatar">
-                                                <div className="w-10">
-                                                    <img src={three} />
-                                                </div>
-                                            </div>
-                                            <div className='ml-1'>
-                                                <h3 className='font-semibold'>Devin Harmon</h3>
-                                                <p className='text-[#8F9BB3]'>+223-156-4598</p>
-                                            </div>
-                                        </td>
-                                        <td>wintheiser_enos@yahoo.com </td>
-                                        <td>131 Simone Harbor Suite 305</td>
-                                        <td>
-                                            <div className='flex items-center'>
-                                                <MdOutlineForwardToInbox size={20} color='#C5CEE0' className='mr-3'></MdOutlineForwardToInbox>
-                                                <BsTelephone size={20} color='#C5CEE0' className='mr-3'></BsTelephone>
-                                                <AiOutlineDelete size={20} color='#C5CEE0'></AiOutlineDelete>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td className='flex items-center'>
-                                            <div className="rating rating-md mr-4">
-                                                <input type="radio" name="rating-8" className="mask mask-star-2 bg-orange-400" checked />
-                                            </div>
-                                            <div className="avatar">
-                                                <div className="w-10">
-                                                    <img src={four} />
-                                                </div>
-                                            </div>
-                                            <div className='ml-1'>
-                                                <h3 className='font-semibold'>Lena Page</h3>
-                                                <p className='text-[#8F9BB3]'>+223-469-7532</p>
-                                            </div>
-                                        </td>
-                                        <td>camila_ledner@gmail.com</td>
-                                        <td>103 Ritchie Cliff Apt, MA 01323 </td>
-                                        <td>
-                                            <div className='flex items-center'>
-                                                <MdOutlineForwardToInbox size={20} color='#C5CEE0' className='mr-3'></MdOutlineForwardToInbox>
-                                                <BsTelephone size={20} color='#C5CEE0' className='mr-3'></BsTelephone>
-                                                <AiOutlineDelete size={20} color='#C5CEE0'></AiOutlineDelete>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td className='flex items-center'>
-                                            <div className="rating rating-md mr-4">
-                                                <input type="radio" name="rating-8" className="mask mask-star-2 bg-orange-400" checked />
-                                            </div>
-                                            <div className="avatar">
-                                                <div className="w-10">
-                                                    <img src={five} />
-                                                </div>
-                                            </div>
-                                            <div className='ml-1'>
-                                                <h3 className='font-semibold'>Eula Horton</h3>
-                                                <p className='text-[#8F9BB3]'>+223-246-4965</p>
-                                            </div>
-                                        </td>
-                                        <td>edula_dorton1221@gmail.com </td>
-                                        <td>10 Dach Parks</td>
-                                        <td>
-                                            <div className='flex items-center'>
-                                                <MdOutlineForwardToInbox size={20} color='#C5CEE0' className='mr-3'></MdOutlineForwardToInbox>
-                                                <BsTelephone size={20} color='#C5CEE0' className='mr-3'></BsTelephone>
-                                                <AiOutlineDelete size={20} color='#C5CEE0'></AiOutlineDelete>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td className='flex items-center'>
-                                            <div className="rating rating-md mr-4">
-                                                <input type="radio" name="rating-8" className="mask mask-star-2 bg-orange-400" checked />
-                                            </div>
-                                            <div className="avatar">
-                                                <div className="w-10">
-                                                    <img src={six} />
-                                                </div>
-                                            </div>
-                                            <div className='ml-1'>
-                                                <h3 className='font-semibold'>Victoria Perez</h3>
-                                                <p className='text-[#8F9BB3]'>+223-458-9672</p>
-                                            </div>
-                                        </td>
-                                        <td>terrill.wiza@hotmail.com</td>
-                                        <td>782 Fadel Rapid Suite 171</td>
-                                        <td>
-                                            <div className='flex items-center'>
-                                                <MdOutlineForwardToInbox size={20} color='#C5CEE0' className='mr-3'></MdOutlineForwardToInbox>
-                                                <BsTelephone size={20} color='#C5CEE0' className='mr-3'></BsTelephone>
-                                                <AiOutlineDelete size={20} color='#C5CEE0'></AiOutlineDelete>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td className='flex items-center'>
-                                            <div className="rating rating-md mr-4">
-                                                <input type="radio" name="rating-8" className="mask mask-star-2 bg-orange-400" checked />
-                                            </div>
-                                            <div className="avatar">
-                                                <div className="w-10">
-                                                    <img src={seven} />
-                                                </div>
-                                            </div>
-                                            <div className='ml-1'>
-                                                <h3 className='font-semibold'>Lily Anna Jone</h3>
-                                                <p className='text-[#8F9BB3]'>+264-342-3437</p>
-                                            </div>
-                                        </td>
-                                        <td>gislason.rebekah@fredy.info</td>
-                                        <td>90 Mitchell Meadow Suite 470</td>
-                                        <td>
-                                            <div className='flex items-center'>
-                                                <MdOutlineForwardToInbox size={20} color='#C5CEE0' className='mr-3'></MdOutlineForwardToInbox>
-                                                <BsTelephone size={20} color='#C5CEE0' className='mr-3'></BsTelephone>
-                                                <AiOutlineDelete size={20} color='#C5CEE0'></AiOutlineDelete>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td className='flex items-center'>
-                                            <div className="rating rating-md mr-4">
-                                                <input type="radio" name="rating-8" className="mask mask-star-2 bg-orange-400" checked />
-                                            </div>
-                                            <div className="avatar">
-                                                <div className="w-10">
-                                                    <img src={eight} />
-                                                </div>
-                                            </div>
-                                            <div className='ml-1'>
-                                                <h3 className='font-semibold'>Rena Paul</h3>
-                                                <p className='text-[#8F9BB3]'>+223-458-9672</p>
-                                            </div>
-                                        </td>
-                                        <td>terrill.wiza@hotmail.com</td>
-                                        <td>7374 Wilfrid Dale</td>
-                                        <td>
-                                            <div className='flex items-center'>
-                                                <MdOutlineForwardToInbox size={20} color='#C5CEE0' className='mr-3'></MdOutlineForwardToInbox>
-                                                <BsTelephone size={20} color='#C5CEE0' className='mr-3'></BsTelephone>
-                                                <AiOutlineDelete size={20} color='#C5CEE0'></AiOutlineDelete>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                </tbody>
-
-                            </table>
-                            <hr />
-
-
-                            <div className="flex items-center justify-between mx-3 my-3">
-                                <div>
-                                    <button className="text-[#C5CEE0] flex items-center gap-2"><AiOutlineArrowLeft size={20}></AiOutlineArrowLeft>Prev</button>
-                                </div>
-                                <div>
-                                    <button className="mr-3">1</button>
-                                    <button className="text-[#C5CEE0]">2</button>
-                                </div>
-                                <div>
-                                    <button className="text-[#C5CEE0] flex items-center gap-2">Next <AiOutlineArrowRight size={20}></AiOutlineArrowRight></button>
-                                </div>
-                            </div>
-
-
-                        </div>
-                    </div>
-                </div>
-
-
+          </div>
+          <div className="flex items-center">
+            <div className="flex items-center justify-between w-[150px]  border border-[#EFF4FA] cursor-pointer rounded-[10px]">
+              <div
+                className="w-1/2 text-center px-4 py-2 bg-[#0095FF] border border-[#0095FF]"
+                style={{
+                  borderTopLeftRadius: "10px",
+                  borderBottomLeftRadius: "10px",
+                }}
+              >
+                <FaListUl size={32} color="#fff"></FaListUl>
+              </div>
+              <div className="px-4 text-center py-2 bg-[#F9FBFD] hover:bg-[#F9FBFD] w-1/2 cursor-pointer">
+                <FaGripHorizontal size={32} color="#8F9BB3"></FaGripHorizontal>
+              </div>
             </div>
-            {
-                isOpen && <AdDContact_modal setIsOpen={setIsOpen}></AdDContact_modal>
-            }
-
+            <a href="#addContact_modal" onClick={() => setIsOpen(true)}>
+              <button className="btn bg-[#00E096] hover:bg-[#00E096] text-white ml-2 capitalize">
+                Add Contact
+              </button>
+            </a>
+          </div>
         </div>
-    );
+        <hr className="mt-5 mb-4" />
+
+        <div className=" relative">
+          <input
+            type="text"
+            placeholder="Search here..."
+            className="h-[34px] placeholder-[#C5CEE0] text-[15px] font-normal outline-none bg-white border border-[#EFF4FA] px-[12px] pl-12 rounded-lg w-full p-5"
+          />
+
+          <FiSearch
+            className="absolute top-[10px] text-[#C5CEE0] ml-4"
+            size={25}
+          />
+        </div>
+      </div>
+
+      {/* Table Starts */}
+      <div className="mt-4 mb-[65px]">
+        <div className=" border border-gray-300 rounded-lg bg-white mt-[25px]">
+          <div className="mt-4">
+            <div className="overflow-x-auto">
+              <table className="table">
+                <tbody>
+                  {contactData?.map((item, index) => (
+                    <tr key={index}>
+                      <td className="flex items-center">
+                        <div className="rating rating-md mr-4">
+                          <input
+                            type="radio"
+                            name="rating-8"
+                            className="mask mask-star-2 bg-orange-400"
+                            checked
+                          />
+                        </div>
+                        <div className="avatar">
+                          <div className="w-10">
+                            <img src={item?.profile} />
+                          </div>
+                        </div>
+                        <div className="ml-1">
+                          <h3 className="font-semibold">{item?.name}</h3>
+                          <p className="text-[#8F9BB3]">{item?.phone}</p>
+                        </div>
+                      </td>
+                      <td>{item?.email}</td>
+                      <td>{item?.address}</td>
+                      <td>
+                        <div className="flex items-center">
+                          <Link to={`mailto:${item?.email}`}>
+                            <MdOutlineForwardToInbox
+                              size={20}
+                              color="#C5CEE0"
+                              className="mr-3"
+                            ></MdOutlineForwardToInbox>
+                          </Link>
+                          <Link to={`tel:${item?.phone}`}>
+                            <BsTelephone
+                              size={20}
+                              color="#C5CEE0"
+                              className="mr-3"
+                            ></BsTelephone>
+                          </Link>
+                          <AiOutlineDelete
+                            size={20}
+                            color="#C5CEE0"
+                          ></AiOutlineDelete>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <hr />
+
+              <div className="flex items-center justify-between mx-3 my-3">
+                <div>
+                  <button className="text-[#C5CEE0] flex items-center gap-2">
+                    <AiOutlineArrowLeft size={20}></AiOutlineArrowLeft>Prev
+                  </button>
+                </div>
+                <div>
+                  <button className="mr-3">1</button>
+                  <button className="text-[#C5CEE0]">2</button>
+                </div>
+                <div>
+                  <button className="text-[#C5CEE0] flex items-center gap-2">
+                    Next <AiOutlineArrowRight size={20}></AiOutlineArrowRight>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {isOpen && <AdDContact_modal setIsOpen={setIsOpen}></AdDContact_modal>}
+    </div>
+  );
 };
 
 export default Contact;

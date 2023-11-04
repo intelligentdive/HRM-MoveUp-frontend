@@ -1,8 +1,8 @@
 import { useState } from "react";
-import AddDepartmentModal from "./AddDepartmentModal";
 import { FaGripHorizontal, FaListUl } from "react-icons/fa";
-import TableDepartmentPage from "./TableDepartmentPage";
+import AddDepartmentModal from "./AddDepartmentModal";
 import GridDepartmentPage from "./GridDepartmentPage";
+import TableDepartmentPage from "./TableDepartmentPage";
 
 const Department = () => {
   const [isOpen, setIsOpen] = useState(false);

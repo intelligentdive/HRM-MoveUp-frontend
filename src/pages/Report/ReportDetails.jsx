@@ -1,9 +1,35 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
 const ReportDetails = () => {
+  const [userDetails, setUserDetails] = useState({});
+  const [prodect, setProdect] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("./data/UserDetails.json")
+      .then((data) => {
+        setUserDetails(data?.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get("./data/Projects.json")
+      .then((data) => {
+        setProdect(data?.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  console.log(prodect);
   return (
     <div className="mt-[25px] border-gray-200 rounded-lg mb-[115px] bg-white">
       <div className="mx-5">
         <div className="flex items-center justify-between">
-          <p className="mt-5">#SF0034</p>
+          <p className="mt-5">{userDetails?.user_id}</p>
           <button className="btn bg-[#0095FF] hover:bg-[#0095FF] btn-sm text-white mt-5">
             Print Invoice
           </button>
@@ -12,17 +38,21 @@ const ReportDetails = () => {
         <div className="mt-[30px] flex items-center justify-between">
           <div>
             <h2 className="font-semibold text-[17px]">Company</h2>
-            <p>Street, Address</p>
-            <p>Street City</p>
-            <p>Region, Postal Code</p>
-            <p>Itd@example.com</p>
+            <p>{userDetails?.address}</p>
+            <p>{userDetails?.city}</p>
+            <p>{userDetails?.postal_code}</p>
+            <Link to={`mailto:${userDetails?.company_mail}`}>
+              {userDetails?.company_mail}
+            </Link>
           </div>
           <div>
             <h2 className="font-semibold text-[17px]">Client</h2>
-            <p>Street, Address</p>
-            <p>Street City</p>
-            <p>Region, Postal Code</p>
-            <p>Cls@example.com</p>
+            <p>{userDetails?.address}</p>
+            <p>{userDetails?.city}</p>
+            <p>{userDetails?.postal_code}</p>
+            <Link to={`mailto:${userDetails?.clint_mail}`}>
+              {userDetails?.clint_mail}
+            </Link>
           </div>
         </div>
 
@@ -49,51 +79,25 @@ const ReportDetails = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td className="border-r">01</td>
-                    <td className="border-r">
-                      <div>
-                        <h3 className="text-[#222B45] text-sm font-semibold">
-                          Logo Creation
-                        </h3>
-                        <p>Logo and business cards design</p>
-                      </div>
-                    </td>
-                    <td className="border-r">1</td>
-                    <td className="border-r">$1,560</td>
-                    <td>$1,560</td>
-                  </tr>
-
-                  <tr>
-                    <td className="border-r">02</td>
-                    <td className="border-r">
-                      <div>
-                        <h3 className="text-[#222B45] text-sm font-semibold">
-                          Online Store Design & Development
-                        </h3>
-                        <p>Design/Develoment for all popular modern browsers</p>
-                      </div>
-                    </td>
-                    <td className="border-r">1</td>
-                    <td className="border-r">$20,000</td>
-                    <td>$20,000</td>
-                  </tr>
-
-                  <tr>
-                    <td className="border-r">03</td>
-                    <td className="border-r">
-                      <div>
-                        <h3 className="text-[#222B45] text-sm font-semibold">
-                          App Design
-                        </h3>
-                        <p>promotional mobile application</p>
-                      </div>
-                    </td>
-                    <td className="border-r">2</td>
-                    <td className="border-r">$3,200</td>
-                    <td>$6,400</td>
-                  </tr>
-
+                  {prodect?.slice(0, 3)?.map((item, index) => (
+                    <tr key={index}>
+                      <td className="border-r">{item?.id}</td>
+                      <td className="border-r">
+                        <div>
+                          <h3 className="text-[#222B45] text-sm font-semibold">
+                            {item?.title}
+                          </h3>
+                          <p> {item?.text}</p>
+                        </div>
+                      </td>
+                      <td className="border-r">{item?.qut}</td>
+                      <td className="border-r">${item?.unit}</td>
+                      <td>
+                        {"$"}
+                        {item?.unit}
+                      </td>
+                    </tr>
+                  ))}
                   <tr>
                     <td>{""}</td>
                     <td>{""}</td>
